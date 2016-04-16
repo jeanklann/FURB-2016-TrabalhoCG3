@@ -2,18 +2,24 @@
 
 namespace TrabalhoCG3 {
     public class Ponto4D {
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
-        public float W { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Z { get; set; }
+        public double W { get; set; }
 
-        public Ponto4D(float x, float y, float z) {
+        public Ponto4D(double x, double y, double z, double w) {
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
+        }
+        public Ponto4D(double x, double y, double z) {
             X = x;
             Y = y;
             Z = z;
             W = 1;
         }
-        public Ponto4D(float x, float y) {
+        public Ponto4D(double x, double y) {
             X = x;
             Y = y;
             Z = 0;
