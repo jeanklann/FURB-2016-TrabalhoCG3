@@ -31,10 +31,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="OpenTK">
+      <HintPath>..\..\OpenTK\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Mundo.cs" />
+    <Compile Include="ObjetoGrafico.cs" />
+    <Compile Include="Transformacao.cs" />
+    <Compile Include="Ponto4D.cs" />
+    <Compile Include="BBox.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="Trabalho3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
