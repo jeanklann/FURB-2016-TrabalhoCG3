@@ -9,9 +9,9 @@ namespace TrabalhoCG3 {
         public float MaxY { get; set; }
         public float MaxZ { get; set; }
 
-        public Ponto4D Centro { 
+        public Point4D Center { 
             get { 
-                return new Ponto4D(
+                return new Point4D(
                     (MinX + MaxX) / 2,
                     (MinY + MaxY) / 2,
                     (MinZ + MaxZ) / 2);
