@@ -6,6 +6,7 @@ using OpenTK.Input;
 
 namespace TrabalhoCG3 {
     public class Game:GameWindow {
+
         /// <summary>
         /// Função executada no carregamento do OpenGL, é chamado automaticamente pela API do OpenTK.
         /// </summary>
@@ -19,7 +20,7 @@ namespace TrabalhoCG3 {
         /// </summary>
         /// <param name="e">E.</param>
         protected override void OnResize (EventArgs e){
-            GL.Viewport(new Rectangle(0,0,Bounds.Width,Bounds.Height));
+            GL.Viewport(new Rectangle(ClientRectangle.Left,ClientRectangle.Top,ClientRectangle.Width,ClientRectangle.Height));
             Matrix4 prj;
             Matrix4.CreateOrthographicOffCenter(
                 States.Camera.MinX_ortho, States.Camera.MaxX_ortho, 
@@ -35,8 +36,10 @@ namespace TrabalhoCG3 {
         protected override void OnUpdateFrame (FrameEventArgs e){
             var state = OpenTK.Input.Keyboard.GetState();
             if (state [Key.Escape]) {
-                System.Environment.Exit (0);
+                Environment.Exit (0);
             }
+
+
         }
         /// <summary>
         /// Função executada para renderizar cada frame.
@@ -79,17 +82,23 @@ namespace TrabalhoCG3 {
                 }
             };
             MouseDown += (object sender, MouseButtonEventArgs e) => {
+                Console.WriteLine("Mouse button down: " + e.Button + " at: " + e.Position);
                 States.IsSelecting = true;
-                States.LastMouseDownPosition = e.Position;
+                States.LastMouseDownPosition = MouseToWorld(e.Position);
             };
             MouseUp += (object sender, MouseButtonEventArgs e) => {
+                Console.WriteLine("Mouse button up: " + e.Button + " at: " + e.Position);
                 States.IsSelecting = false;
                 States.LastMouseUpPosition = e.Position;
+
             };
             MouseMove += (object sender, MouseMoveEventArgs e) => {
-                States.MousePosition = e.Position;
+                States.MousePosition = MouseToWorld(e.Position);
             };
+
+
         }
+
         /// <summary>
         /// Desenha o SRU
         /// </summary>
@@ -111,19 +120,24 @@ namespace TrabalhoCG3 {
                 GL.LineWidth(1);
                 GL.Begin(PrimitiveType.LineLoop);
                 GL.Color3(Color.Orange);
+
+
                 GL.Vertex2(States.LastMouseDownPosition.X, -States.LastMouseDownPosition.Y);
                 GL.Vertex2(States.LastMouseDownPosition.X, -States.MousePosition.Y);
                 GL.Vertex2(States.MousePosition.X, -States.MousePosition.Y);
                 GL.Vertex2(States.MousePosition.X, -States.LastMouseDownPosition.Y);
+
                 GL.End();
             }
         }
 
-        public Point TopLeftOffset() {
+        public Point MouseToWorld(Point mousePosition) {
             Size cameraSize = States.Camera.Size;
-            Point4D cameraCenter = States.Camera.Center;
-            Size bounds = Bounds.Size;
-            Point4D boundsCenter = new Point4D(bounds.Width / 2, bounds.Height/2);
+            Size bounds = ClientSize;
+            Point res = new Point(
+                              mousePosition.X * cameraSize.Width / bounds.Width - cameraSize.Width / 2,
+                              mousePosition.Y * cameraSize.Height / bounds.Height - cameraSize.Height / 2);
+            return res;
         }
 
     }

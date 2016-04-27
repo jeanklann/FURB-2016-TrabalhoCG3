@@ -8,7 +8,7 @@ namespace TrabalhoCG3 {
             States.Camera = new Camera();
 
             Game game = new Game();
-            game.Bounds = new Rectangle (0, 0, 800, 800);
+            game.ClientSize = new Size (400, 400);
             game.Run (60);
         }
     }
