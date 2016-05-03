@@ -30,6 +30,12 @@ namespace TrabalhoCG3 {
             }
             matrix[0] = matrix[5] = matrix[10] = matrix[15] = 1.0;
         }
+        public void AddIdentity() {
+            matrix[0] += 1;
+            matrix[5] += 1;
+            matrix[10] += 1;
+            matrix[15] += 1;
+        }
 
         public void SetTranslation(double tx, double ty, double tz)
         {
@@ -38,6 +44,13 @@ namespace TrabalhoCG3 {
             matrix[13] = ty;
             matrix[14] = tz;
         }
+        public void AddTranslation(double tx, double ty, double tz)
+        {
+            //AddIdentity();
+            matrix[12] += tx;
+            matrix[13] += ty;
+            matrix[14] += tz;
+        }
 
         public void SetScale(double sX, double sY, double sZ)
         {
@@ -45,6 +58,13 @@ namespace TrabalhoCG3 {
             matrix[0] =  sX;
             matrix[5] =  sY;
             matrix[10] = sZ;
+        }
+        public void AddScale(double sX, double sY, double sZ)
+        {
+            AddIdentity();
+            matrix[0] +=  sX;
+            matrix[5] +=  sY;
+            matrix[10] += sZ;
         }
 
         public void SetRotationX(double radians)
@@ -72,6 +92,14 @@ namespace TrabalhoCG3 {
             matrix[4] = -Math.Sin(radians);
             matrix[1] =  Math.Sin(radians);
             matrix[5] =  Math.Cos(radians);
+        }
+        public void AddRotationZ(double radians)
+        {
+            AddIdentity();
+            matrix[0] +=  Math.Cos(radians);
+            matrix[4] += -Math.Sin(radians);
+            matrix[1] +=  Math.Sin(radians);
+            matrix[5] +=  Math.Cos(radians);
         }
 
         public Point4D TransformPoint(Point4D point) {

@@ -10,9 +10,16 @@ namespace TrabalhoCG3 {
         public static Point MousePosition { get; set;}
         public static Point LastMouseUpPosition { get; set;}
         public static Point LastMouseDownPosition { get; set;}
-        public static bool IsCreating { get; set;}
-        public static bool IsMoving { get; set;}
-        public static Camera Camera;
+        public static bool IsTransforming { get; set;}
+        public static bool IsScaling { get; set;}
+        public static bool IsTranslating { get; set;}
+        public static bool IsRotating { get; set;}
+        public static bool IsPamming { get; set; }
+        public static Point LastMouseTransformingPosition { get; set;}
+
+        public static World World;
+
+        public static GraphicObject GraphicObjectCreating;
     }
 }
 

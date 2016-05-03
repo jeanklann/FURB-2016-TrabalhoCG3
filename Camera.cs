@@ -21,6 +21,14 @@ namespace TrabalhoCG3 {
                     (MinX_ortho + MaxX_ortho) / 2,
                     (MinY_ortho + MaxY_ortho) / 2);
             }
+            set {
+                double W = MaxX_ortho - MinX_ortho;
+                double H = MaxY_ortho - MinY_ortho;
+                MinX_ortho = value.X - W / 2;
+                MaxX_ortho = value.X + W / 2;
+                MinY_ortho = value.Y - H / 2;
+                MaxY_ortho = value.Y + H / 2;
+            }
         }
         public Size Size {
             get {
@@ -30,10 +38,10 @@ namespace TrabalhoCG3 {
             }
         }
 
-        public float MinX_ortho { get; set;}
-        public float MinY_ortho { get; set;}
-        public float MaxX_ortho { get; set;}
-        public float MaxY_ortho { get; set;}
+        public double MinX_ortho { get; set;}
+        public double MinY_ortho { get; set;}
+        public double MaxX_ortho { get; set;}
+        public double MaxY_ortho { get; set;}
 
         public void Pan(){}
         public void Zoom(){}

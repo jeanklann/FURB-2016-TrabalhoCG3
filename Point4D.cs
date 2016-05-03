@@ -39,6 +39,19 @@ namespace TrabalhoCG3 {
         public override string ToString() {
             return string.Format("[{0},{1},{2},{3}]", X, Y, Z, W);
         }
+
+        public static Point4D operator +(Point4D n1,  Point4D n2){
+            return new Point4D(n1.X+n2.X, n1.Y + n2.Y, n1.Z+n2.Z, n1.W);
+        }
+        public static Point4D operator -(Point4D n1,  Point4D n2){
+            return new Point4D(n1.X-n2.X, n1.Y - n2.Y, n1.Z-n2.Z, n1.W);
+        }
+        public static Point4D operator *(Point4D n1,  Point4D n2){
+            return new Point4D(n1.X*n2.X, n1.Y*n2.Y, n1.Z*n2.Z, n1.W);
+        }
+        public static Point4D operator /(Point4D n1,  Point4D n2){
+            return new Point4D(n1.X/n2.X, n1.Y/n2.Y, n1.Z/n2.Z, n1.W);
+        }
     }
 }
 

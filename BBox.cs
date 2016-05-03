@@ -2,12 +2,12 @@
 
 namespace TrabalhoCG3 {
     public class BBox {
-        public float MinX { get; set; }
-        public float MinY { get; set; }
-        public float MinZ { get; set; }
-        public float MaxX { get; set; }
-        public float MaxY { get; set; }
-        public float MaxZ { get; set; }
+        public double MinX { get; set; }
+        public double MinY { get; set; }
+        public double MinZ { get; set; }
+        public double MaxX { get; set; }
+        public double MaxY { get; set; }
+        public double MaxZ { get; set; }
 
         public Point4D Center { 
             get { 

@@ -6,6 +6,8 @@ namespace TrabalhoCG3 {
         public List<GraphicObject> GraphicObjects { get; set; }
         public Camera Camera { get; set; }
         public World() {
+            GraphicObjects = new List<GraphicObject>();
+            Camera = new Camera();
         }
 
     }
