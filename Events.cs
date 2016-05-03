@@ -8,7 +8,12 @@ namespace TrabalhoCG3 {
     public static class Events {
         private static Point delta;
         private static Point4D difference;
-
+        /// <summary>
+        /// Muda a primitiva do objeto selecionado
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownChangePrimitiveType(object sender, KeyboardKeyEventArgs e){
             if(States.SelectedGraphicObject!=null){
                 for (int i = 0; i < GraphicObject.PrimitiveTypes.Length; i++) {
@@ -27,6 +32,12 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Rotaciona o objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownRotate(object sender, KeyboardKeyEventArgs e){
             ResetTransforms();
             if(States.SelectedGraphicObject!=null){
@@ -37,6 +48,12 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Escala o objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownScale(object sender, KeyboardKeyEventArgs e){
             ResetTransforms();
             if(States.SelectedGraphicObject!=null){
@@ -47,6 +64,12 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Translada o objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownTranslate(object sender, KeyboardKeyEventArgs e){
             ResetTransforms();
             if(States.SelectedGraphicObject!=null){
@@ -57,6 +80,12 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Deleta o objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownDeleteObject(object sender, KeyboardKeyEventArgs e){
             if(States.SelectedGraphicObject != null){
                 Game.Remove(States.SelectedGraphicObject, States.World.GraphicObjects);
@@ -65,6 +94,12 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Cria um novo objeto gráfico
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownCreateGraphicObject(object sender, KeyboardKeyEventArgs e){
             if(States.GraphicObjectCreating==null){
                 States.GraphicObjectCreating = new GraphicObject();
@@ -72,6 +107,12 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Pega o próximo objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownNextObject(object sender, KeyboardKeyEventArgs e){
             if(States.SelectedGraphicObject != null){
                 int i = States.World.GraphicObjects.IndexOf(States.SelectedGraphicObject);
@@ -87,6 +128,12 @@ namespace TrabalhoCG3 {
             Console.WriteLine("Selecionado próximo objeto no mundo");
             return false;
         }
+        /// <summary>
+        /// Pega o objeto anterior
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownPreviousObject(object sender, KeyboardKeyEventArgs e){
             if(States.SelectedGraphicObject != null){
                 int i = States.World.GraphicObjects.IndexOf(States.SelectedGraphicObject);
@@ -101,6 +148,12 @@ namespace TrabalhoCG3 {
             Console.WriteLine("Selecionado objeto anterior no mundo");
             return false;
         }
+        /// <summary>
+        /// Mostra a ajuda no console
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownHelp(object sender, KeyboardKeyEventArgs e){
             Console.WriteLine("-------------- AJUDA --------------");
 
@@ -126,25 +179,53 @@ namespace TrabalhoCG3 {
             Console.WriteLine("-----------------------------------");
             return false;
         }
+        /// <summary>
+        /// Desseleciona o objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownDeselect(object sender, KeyboardKeyEventArgs e){
             States.SelectedGraphicObject = null;
             return false;
         }
+        /// <summary>
+        /// Caso pressiou outra tecla
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownOther(object sender, KeyboardKeyEventArgs e){
             Console.WriteLine("Tecla não mapeada pressionada: "+e.Key+", aperte F1 para ver a lista de todas as teclas.");
             return false;
         }
 
-
+        /// <summary>
+        /// Se o botão do mouse que soltou é o do meio
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseUpIsMiddle(object sender, MouseButtonEventArgs e){
             States.IsPamming = false;
             return false;
         }
-
+        /// <summary>
+        /// Se o botão do mouse que pressionou é o do meio
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseDownIsMiddle(object sender, MouseButtonEventArgs e){
             States.IsPamming = true;
             return true;
         }
+        /// <summary>
+        /// Se o botão do mouse foi pressionado e o objeto está sendo criado
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseDownIsGraphicObjectCreatingNotNull(object sender, MouseButtonEventArgs e){
             if(e.Button == MouseButton.Left){
                 if(States.GraphicObjectCreating.Points.Count < 1){
@@ -173,10 +254,22 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Se o botão do mouse foi pressionado e o objeto não está sendo criado
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseDownIsGraphicObjectCreatingNull(object sender, MouseButtonEventArgs e){
             States.IsSelecting = true;
             return false;
         }
+        /// <summary>
+        /// Se o botão do mouse foi pressionado e há um objeto selecionado
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseDownIsSelectedGraphicObjectNotNull(object sender, MouseButtonEventArgs e){
             if(e.Button == MouseButton.Left){
                 States.SelectedGraphicObject.ReadyMatrix();
@@ -187,10 +280,22 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Se o botão do mouse foi solto e está mexendo a tela
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseUpIsPamming(object sender, MouseButtonEventArgs e){
             States.IsPamming = false;
             return true;
         }
+        /// <summary>
+        /// Se o botão do mouse foi movido e está mexendo a tela
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseMoveIsPamming(object sender, MouseMoveEventArgs e){
             Point point = Game.MouseToWorldDelta(new Point(e.XDelta, e.YDelta));
             States.World.Camera.Center += new Point4D(-point.X, point.Y);
@@ -203,10 +308,21 @@ namespace TrabalhoCG3 {
             GL.LoadMatrix (ref Game.ProjectionMatrix);
             return false;
         }
+        /// <summary>
+        /// Se o botão do mouse foi movido e selecionando
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseMoveIsSelecting(object sender, MouseMoveEventArgs e){
             return false;
         }
-
+        /// <summary>
+        /// Se o botão do mouse foi movido e está transformando um objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseMoveIsTransforming(object sender, MouseMoveEventArgs e){
             difference = new Point4D(
                 States.MousePosition.X - States.LastMouseTransformingPosition.X,
@@ -219,6 +335,12 @@ namespace TrabalhoCG3 {
             delta = Game.MouseToWorldDelta(delta);
             return false;
         }
+        /// <summary>
+        /// Se o botão do mouse foi movido e está transladando um objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseMoveIsTranslating(object sender, MouseMoveEventArgs e){
             if(States.SelectedGraphicObject != null){
                 States.SelectedGraphicObject.Transform.AddTranslation(delta.X, -delta.Y, 0);
@@ -227,6 +349,12 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Se o botão do mouse foi movido e está escalando um objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseMoveIsScaling(object sender, MouseMoveEventArgs e){
             if(States.SelectedGraphicObject != null){
                 States.SelectedGraphicObject.Transform.SetScale(difference.X/100f+1, difference.Y/100f+1, 0);
@@ -235,6 +363,12 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Se o botão do mouse foi movido e está rotacionando um objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseMoveIsRotating(object sender, MouseMoveEventArgs e){
             if(States.SelectedGraphicObject != null){
                 States.SelectedGraphicObject.Transform.SetRotationZ(difference.X/360f);
@@ -243,6 +377,12 @@ namespace TrabalhoCG3 {
             }
             return false;
         }
+        /// <summary>
+        /// Se o botão do mouse foi movido e há um objeto sendo criado
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseMoveIsGraphicObjectCreatingNotNull(object sender, MouseMoveEventArgs e){
             if(States.GraphicObjectCreating.Points.Count > 0){
                 States.GraphicObjectCreating.Points[States.GraphicObjectCreating.Points.Count-1] = 
