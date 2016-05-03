@@ -13,6 +13,7 @@ namespace TrabalhoCG3 {
         public const Key Increment = Key.Plus;
         public const Key Decrement = Key.Minus;
 
+        public const Key Deselect = Key.A;
         public const Key NextObject = Key.PageUp;
         public const Key PreviousObject = Key.PageDown;
 
