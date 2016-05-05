@@ -6,6 +6,9 @@ namespace TrabalhoCG3 {
         public Transform() {
             
         }
+        private static Transform MatrixTranslate = new Transform();
+        private static Transform MatrixInverseTranslate = new Transform();
+
         private double[] matrix =
         {    1, 0, 0, 0 ,
              0, 1, 0, 0 ,
@@ -44,6 +47,7 @@ namespace TrabalhoCG3 {
             matrix[13] = ty;
             matrix[14] = tz;
         }
+
         public void AddTranslation(double tx, double ty, double tz)
         {
             //AddIdentity();
@@ -52,55 +56,70 @@ namespace TrabalhoCG3 {
             matrix[14] += tz;
         }
 
-        public void SetScale(double sX, double sY, double sZ)
+        public void SetScale(double sX, double sY, double sZ, Point4D center)
         {
+            Transform.MatrixInverseTranslate.SetTranslation(-center.X, -center.Y, -center.Z);
+            Transform.MatrixTranslate.SetTranslation(center.X, center.Y, center.Z);
+
             SetIdentity();
+            Matrix = TransformMatrix(Transform.MatrixTranslate).Matrix;
+
             matrix[0] =  sX;
             matrix[5] =  sY;
             matrix[10] = sZ;
-        }
-        public void AddScale(double sX, double sY, double sZ)
-        {
-            AddIdentity();
-            matrix[0] +=  sX;
-            matrix[5] +=  sY;
-            matrix[10] += sZ;
+
+            Matrix = TransformMatrix(Transform.MatrixInverseTranslate).Matrix;
         }
 
-        public void SetRotationX(double radians)
+        public void SetRotationX(double radians, Point4D center)
         {
+            Transform.MatrixInverseTranslate.SetTranslation(-center.X, -center.Y, -center.Z);
+            Transform.MatrixTranslate.SetTranslation(center.X, center.Y, center.Z);
+
             SetIdentity();
+            Matrix = TransformMatrix(Transform.MatrixTranslate).Matrix;
+
             matrix[5] =   Math.Cos(radians);
             matrix[9] =  -Math.Sin(radians);
             matrix[6] =   Math.Sin(radians);
             matrix[10] =  Math.Cos(radians);
+
+            Matrix = TransformMatrix(Transform.MatrixInverseTranslate).Matrix;
         }
 
-        public void SetRotationY(double radians)
+        public void SetRotationY(double radians, Point4D center)
         {
+            Transform.MatrixInverseTranslate.SetTranslation(-center.X, -center.Y, -center.Z);
+            Transform.MatrixTranslate.SetTranslation(center.X, center.Y, center.Z);
+
             SetIdentity();
+            Matrix = TransformMatrix(Transform.MatrixTranslate).Matrix;
+
             matrix[0] =   Math.Cos(radians);
             matrix[8] =   Math.Sin(radians);
             matrix[2] =  -Math.Sin(radians);
             matrix[10] =  Math.Cos(radians);
+
+            Matrix = TransformMatrix(Transform.MatrixInverseTranslate).Matrix;
         }
 
-        public void SetRotationZ(double radians)
+        public void SetRotationZ(double radians, Point4D center)
         {
+            Transform.MatrixInverseTranslate.SetTranslation(-center.X, -center.Y, -center.Z);
+            Transform.MatrixTranslate.SetTranslation(center.X, center.Y, center.Z);
+
             SetIdentity();
+            Matrix = TransformMatrix(Transform.MatrixTranslate).Matrix;
+
             matrix[0] =  Math.Cos(radians);
             matrix[4] = -Math.Sin(radians);
             matrix[1] =  Math.Sin(radians);
             matrix[5] =  Math.Cos(radians);
+
+
+            Matrix = TransformMatrix(Transform.MatrixInverseTranslate).Matrix;
         }
-        public void AddRotationZ(double radians)
-        {
-            AddIdentity();
-            matrix[0] +=  Math.Cos(radians);
-            matrix[4] += -Math.Sin(radians);
-            matrix[1] +=  Math.Sin(radians);
-            matrix[5] +=  Math.Cos(radians);
-        }
+
 
         public Point4D TransformPoint(Point4D point) {
             Point4D pointResult = new Point4D(

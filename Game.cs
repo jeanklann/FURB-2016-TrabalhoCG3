@@ -52,7 +52,7 @@ namespace TrabalhoCG3 {
             GL.Clear (ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.PushMatrix ();
             DrawSRU ();
-            DrawMouseSelection();
+            //DrawMouseSelection();
             GL.Color3 (Color.Blue);
             foreach(GraphicObject obj in States.World.GraphicObjects) {
                 obj.Draw();

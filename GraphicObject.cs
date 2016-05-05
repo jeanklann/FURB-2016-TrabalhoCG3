@@ -14,12 +14,6 @@ namespace TrabalhoCG3 {
         public Color Color { get; set; }
         public float Size { get; set; }
 
-        private static Transform MatrixTranslate = new Transform();
-        private static Transform MatrixInverseTranslate = new Transform();
-        private static Transform MatrixScale = new Transform();     
-        private static Transform MatrixRotationZ = new Transform();
-        private static Transform MatrixGlobal = new Transform();
-
         public GraphicObject(){
             Points = new List<Point4D>();
             Transform = new Transform();
@@ -31,8 +25,11 @@ namespace TrabalhoCG3 {
         }
 
         public void ReadyMatrix(){
+            ReadyMatrix(Transform);
+        }
+        public void ReadyMatrix(Transform transform){
             for(int i = 0; i < Points.Count; i++) {
-                Points[i] = Transform.TransformPoint(Points[i]);
+                Points[i] = transform.TransformPoint(Points[i]);
 
                 if(i == 0) {
                     BBox.MaxX = Points[i].X;
@@ -49,6 +46,9 @@ namespace TrabalhoCG3 {
                     if(BBox.MinY > Points[i].Y)
                         BBox.MinY = Points[i].Y;
                 }
+            }
+            foreach(GraphicObject obj in Sons) {
+                obj.ReadyMatrix(transform);
             }
             Transform.SetIdentity();
         }

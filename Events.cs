@@ -3,6 +3,7 @@ using OpenTK.Input;
 using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Collections.Generic;
 
 namespace TrabalhoCG3 {
     public static class Events {
@@ -168,6 +169,7 @@ namespace TrabalhoCG3 {
             Console.WriteLine(String.Format("Tecla {0}: Mais zoom", KeyMapping.ZoomPlus));
             Console.WriteLine(String.Format("Botão do meio do mouse: Pan"));
 
+            Console.WriteLine(String.Format("Tecla {0}: Deseleciona o objeto", KeyMapping.Deselect));
             Console.WriteLine(String.Format("Tecla {0}: Próximo objeto no mundo", KeyMapping.NextObject));
             Console.WriteLine(String.Format("Tecla {0}: Objeto anterior no mundo", KeyMapping.PreviousObject));
 
@@ -248,7 +250,10 @@ namespace TrabalhoCG3 {
                     States.GraphicObjectCreating.Points.RemoveAt(States.GraphicObjectCreating.Points.Count-1);
                     GraphicObject tmp = States.GraphicObjectCreating;
                     States.GraphicObjectCreating = null;
-                    States.World.GraphicObjects.Add(tmp);
+                    if(States.SelectedGraphicObject != null)
+                        States.SelectedGraphicObject.Sons.Add(tmp);
+                    else
+                        States.World.GraphicObjects.Add(tmp);
                 }
                 Console.WriteLine("Encerrou a criação do objeto");
             }
@@ -262,8 +267,68 @@ namespace TrabalhoCG3 {
         /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseDownIsGraphicObjectCreatingNull(object sender, MouseButtonEventArgs e){
             States.IsSelecting = true;
+
+            VerificaSelecao(States.World.GraphicObjects);
+
+
+
             return false;
         }
+        /// <summary>
+        /// Faz a verificação se o ponto onde foi clicado está dentro do objeto
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="objects">Lista de objeto a ser iterado (inicialmente deve ser chamado o States.World.GraphicObjects</param>
+        private static bool VerificaSelecao(List<GraphicObject> objects){
+            if(States.IsTransforming)
+                return false;
+            if(States.GraphicObjectCreating != null)
+                return false;
+            
+            States.SelectedGraphicObject = null;
+            foreach(GraphicObject obj in objects) {
+                int n = 0;
+                for(int i = 0; i < obj.Points.Count; i++) {
+                    int j = i+1;
+                    if(j >= obj.Points.Count)
+                        j = 0;
+                    
+                    double t = (States.LastMouseDownPosition.Y -obj.Points[i].Y) / (obj.Points[j].Y-obj.Points[i].Y);
+                    Point4D inter = new Point4D(
+                        obj.Points[i].X + (obj.Points[j].X - obj.Points[i].X) * t,
+                        obj.Points[i].Y + (obj.Points[j].Y - obj.Points[i].Y) * t
+                    );
+
+                    if(Math.Abs(obj.Points[i].Y - obj.Points[j].Y) > 0.1) {
+                        if(Math.Abs(inter.X - States.LastMouseDownPosition.X) < 0.1)
+                            break;
+                        else {
+                            if( inter.X > States.LastMouseDownPosition.X && 
+                                inter.Y > Math.Min(obj.Points[i].Y, obj.Points[j].Y) &&
+                                inter.Y <= Math.Max(obj.Points[i].Y, obj.Points[j].Y)
+                            ) {
+                                n++;
+                            }
+                        }
+                    } else {
+                        if (Math.Abs(States.LastMouseDownPosition.Y - obj.Points[i].Y) < 0.1 && 
+                            States.LastMouseDownPosition.X >= Math.Min(obj.Points[i].X, obj.Points[j].X) && 
+                            States.LastMouseDownPosition.X <= Math.Max(obj.Points[i].X, obj.Points[j].X)){
+                            break;
+                        }
+                    }
+                }
+
+                if(n % 2 != 0) {
+                    States.SelectedGraphicObject = obj;
+                    break;
+                }
+                VerificaSelecao(obj.Sons);
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Se o botão do mouse foi pressionado e há um objeto selecionado
         /// </summary>
@@ -271,12 +336,16 @@ namespace TrabalhoCG3 {
         /// <param name="sender">Sender.</param>
         /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseDownIsSelectedGraphicObjectNotNull(object sender, MouseButtonEventArgs e){
-            if(e.Button == MouseButton.Left){
-                States.SelectedGraphicObject.ReadyMatrix();
-                Console.WriteLine("Objeto transformado");
-            } else if(e.Button == MouseButton.Right){
-                States.SelectedGraphicObject.Transform.SetIdentity();
-                Console.WriteLine("Resetou a transformação");
+            if(States.IsTransforming) {
+                if(e.Button == MouseButton.Left) {
+                    States.SelectedGraphicObject.ReadyMatrix();
+                    Console.WriteLine("Objeto transformado");
+                } else if(e.Button == MouseButton.Right) {
+                    States.SelectedGraphicObject.Transform.SetIdentity();
+                    Console.WriteLine("Resetou a transformação");
+                }
+            } else {
+                VerificaSelecao(States.World.GraphicObjects);
             }
             return false;
         }
@@ -357,7 +426,8 @@ namespace TrabalhoCG3 {
         /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseMoveIsScaling(object sender, MouseMoveEventArgs e){
             if(States.SelectedGraphicObject != null){
-                States.SelectedGraphicObject.Transform.SetScale(difference.X/100f+1, difference.Y/100f+1, 0);
+                States.SelectedGraphicObject.Transform.SetScale(difference.X/100f+1, difference.Y/100f+1, 0,
+                    States.SelectedGraphicObject.BBox.Center);
             } else if(States.SelectedPoints != null){
 
             }
@@ -371,7 +441,8 @@ namespace TrabalhoCG3 {
         /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseMoveIsRotating(object sender, MouseMoveEventArgs e){
             if(States.SelectedGraphicObject != null){
-                States.SelectedGraphicObject.Transform.SetRotationZ(difference.X/360f);
+                States.SelectedGraphicObject.Transform.SetRotationZ(difference.X/100f,
+                    States.SelectedGraphicObject.BBox.Center);
             } else if(States.SelectedPoints != null){
 
             }
