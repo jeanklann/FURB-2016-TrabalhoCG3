@@ -1,6 +1,9 @@
 ﻿using System;
 
 namespace TrabalhoCG3 {
+    /// <summary>
+    /// Classe responsável pelos pontos na tela
+    /// </summary>
     public class Point4D {
         public double X { get; set; }
         public double Y { get; set; }
@@ -31,7 +34,10 @@ namespace TrabalhoCG3 {
             Z = 0;
             W = 1;
         }
-
+        /// <summary>
+        /// Inverte o sinal deste ponto
+        /// </summary>
+        /// <returns>O ponto com o sinal invertido</returns>
         public Point4D ReverseSignal(){
             return new Point4D(-X, -Y, -Z);
         }

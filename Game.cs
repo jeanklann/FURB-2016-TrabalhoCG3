@@ -6,6 +6,9 @@ using OpenTK.Input;
 using System.Collections.Generic;
 
 namespace TrabalhoCG3 {
+    /// <summary>
+    /// Classe da tela do jogo
+    /// </summary>
     public class Game:GameWindow {
         public static Matrix4 ProjectionMatrix;
 
@@ -100,6 +103,9 @@ namespace TrabalhoCG3 {
                     case KeyMapping.Deselect:
                         Events.KeyDownDeselect(sender,e);
                         break;
+                    case KeyMapping.ChangeColor:
+                        Events.KeyDownChangeColor(sender,e);
+                        break;
                     default:
                         Events.KeyDownOther(sender,e);
                         break;
@@ -151,6 +157,23 @@ namespace TrabalhoCG3 {
                 } else if(States.GraphicObjectCreating != null){
                     if(Events.MouseMoveIsGraphicObjectCreatingNotNull(sender,e)) return;
                 }
+            };
+            MouseWheel += (object sender, MouseWheelEventArgs e) => {
+                Size s = States.World.Camera.Size;
+                s.Width -= e.Delta*50;
+                s.Height -= e.Delta*50;
+                if(s.Width < 0)
+                    s.Width = 1;
+                if(s.Height < 0)
+                    s.Height = 1;
+                States.World.Camera.Size = s;
+
+                Matrix4.CreateOrthographicOffCenter(
+                    (float) States.World.Camera.MinX_ortho, (float) States.World.Camera.MaxX_ortho, 
+                    (float) States.World.Camera.MinY_ortho, (float) States.World.Camera.MaxY_ortho, 
+                    0, 100, out Game.ProjectionMatrix);
+                GL.MatrixMode (MatrixMode.Projection);
+                GL.LoadMatrix (ref Game.ProjectionMatrix);
             };
 
 

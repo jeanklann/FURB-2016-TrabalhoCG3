@@ -6,6 +6,9 @@ using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 
 namespace TrabalhoCG3 {
+    /// <summary>
+    /// Classe responsável por controlar os eventos do mouse e teclado
+    /// </summary>
     public static class Events {
         private static Point delta;
         private static Point4D difference;
@@ -150,6 +153,21 @@ namespace TrabalhoCG3 {
             return false;
         }
         /// <summary>
+        /// Pega o objeto anterior
+        /// </summary>
+        /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="e">KeyboardKeyEventArgs</param>
+        public static bool KeyDownChangeColor(object sender, KeyboardKeyEventArgs e){
+            if(States.SelectedGraphicObject != null) {
+                States.SelectedGraphicObject.ChangeColor();
+                Console.WriteLine("Mudado a cor do objeto");
+            } else {
+                Console.WriteLine("Nenhum objeto selecionado para mudar a cor");
+            }
+            return false;
+        }
+        /// <summary>
         /// Mostra a ajuda no console
         /// </summary>
         /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
@@ -173,6 +191,7 @@ namespace TrabalhoCG3 {
             Console.WriteLine(String.Format("Tecla {0}: Próximo objeto no mundo", KeyMapping.NextObject));
             Console.WriteLine(String.Format("Tecla {0}: Objeto anterior no mundo", KeyMapping.PreviousObject));
 
+            Console.WriteLine(String.Format("Tecla {0}: Muda a cor", KeyMapping.ChangeColor));
             Console.WriteLine(String.Format("Tecla {0}: Muda a primitiva", KeyMapping.ChangePrimitiveType));
             Console.WriteLine(String.Format("Tecla {0}: Translada", KeyMapping.Translate));
             Console.WriteLine(String.Format("Tecla {0}: Rotaciona", KeyMapping.Rotate));

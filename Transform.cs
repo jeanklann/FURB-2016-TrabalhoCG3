@@ -1,6 +1,9 @@
 ﻿using System;
 
 namespace TrabalhoCG3 {
+    /// <summary>
+    /// Classe responsável pela matriz de transformação
+    /// </summary>
     public class Transform {
         public const double DEG_TO_RAD = 0.017453292519943295769236907684886;
         public Transform() {
@@ -22,24 +25,29 @@ namespace TrabalhoCG3 {
                 } }
             get { return matrix; }
         }
-            
+        /// <summary>
+        /// Coloca um valor em um determinado local na matriz
+        /// </summary>
+        /// <param name="valor">Valor.</param>
+        /// <param name="indice">Indice.</param>
         public void setMatrix(double valor, int indice){
             matrix[indice] = valor;
         }
-
+        /// <summary>
+        /// Coloca a matriz identidade no lugar
+        /// </summary>
         public void SetIdentity() {
             for (int i=0; i<16; ++i) {
                 matrix[i] = 0.0;
             }
             matrix[0] = matrix[5] = matrix[10] = matrix[15] = 1.0;
         }
-        public void AddIdentity() {
-            matrix[0] += 1;
-            matrix[5] += 1;
-            matrix[10] += 1;
-            matrix[15] += 1;
-        }
-
+        /// <summary>
+        /// Faz a translação da matriz
+        /// </summary>
+        /// <param name="tx">X.</param>
+        /// <param name="ty">Y.</param>
+        /// <param name="tz">Z.</param>
         public void SetTranslation(double tx, double ty, double tz)
         {
             SetIdentity();
@@ -47,7 +55,12 @@ namespace TrabalhoCG3 {
             matrix[13] = ty;
             matrix[14] = tz;
         }
-
+        /// <summary>
+        /// Faz a translação da matriz (enquanto estiver ainda tranladando)
+        /// </summary>
+        /// <param name="tx">X.</param>
+        /// <param name="ty">Y.</param>
+        /// <param name="tz">Z.</param>
         public void AddTranslation(double tx, double ty, double tz)
         {
             //AddIdentity();
@@ -55,7 +68,13 @@ namespace TrabalhoCG3 {
             matrix[13] += ty;
             matrix[14] += tz;
         }
-
+        /// <summary>
+        /// Faz a escala da matriz
+        /// </summary>
+        /// <param name="sX">X.</param>
+        /// <param name="sY">Y.</param>
+        /// <param name="sZ">Z.</param>
+        /// <param name="center">Referência.</param>
         public void SetScale(double sX, double sY, double sZ, Point4D center)
         {
             Transform.MatrixInverseTranslate.SetTranslation(-center.X, -center.Y, -center.Z);
@@ -70,7 +89,11 @@ namespace TrabalhoCG3 {
 
             Matrix = TransformMatrix(Transform.MatrixInverseTranslate).Matrix;
         }
-
+        /// <summary>
+        /// Faz a rotação da matriz no eixo X
+        /// </summary>
+        /// <param name="radians">Ângulol.</param>
+        /// <param name="center">Referência.</param>
         public void SetRotationX(double radians, Point4D center)
         {
             Transform.MatrixInverseTranslate.SetTranslation(-center.X, -center.Y, -center.Z);
@@ -86,7 +109,11 @@ namespace TrabalhoCG3 {
 
             Matrix = TransformMatrix(Transform.MatrixInverseTranslate).Matrix;
         }
-
+        /// <summary>
+        /// Faz a rotação da matriz no eixo Y
+        /// </summary>
+        /// <param name="radians">Ângulol.</param>
+        /// <param name="center">Referência.</param>
         public void SetRotationY(double radians, Point4D center)
         {
             Transform.MatrixInverseTranslate.SetTranslation(-center.X, -center.Y, -center.Z);
@@ -102,7 +129,11 @@ namespace TrabalhoCG3 {
 
             Matrix = TransformMatrix(Transform.MatrixInverseTranslate).Matrix;
         }
-
+        /// <summary>
+        /// Faz a rotação da matriz no eixo Z
+        /// </summary>
+        /// <param name="radians">Ângulol.</param>
+        /// <param name="center">Referência.</param>
         public void SetRotationZ(double radians, Point4D center)
         {
             Transform.MatrixInverseTranslate.SetTranslation(-center.X, -center.Y, -center.Z);
@@ -120,7 +151,11 @@ namespace TrabalhoCG3 {
             Matrix = TransformMatrix(Transform.MatrixInverseTranslate).Matrix;
         }
 
-
+        /// <summary>
+        /// Faz a transformação da matriz em um determinado ponto
+        /// </summary>
+        /// <returns>O ponto a ser transformado</returns>
+        /// <param name="point">O ponto transformado</param>
         public Point4D TransformPoint(Point4D point) {
             Point4D pointResult = new Point4D(
                 matrix[0]*point.X  + matrix[4]*point.Y + matrix[8]*point.Z + matrix[12]*point.W,
@@ -130,7 +165,11 @@ namespace TrabalhoCG3 {
             );
             return pointResult;
         }
-
+        /// <summary>
+        /// Faz a multiplicação das matrizes de transfomação
+        /// </summary>
+        /// <returns>A matriz a ser transformada</returns>
+        /// <param name="t">A matriz transformada</param>
         public Transform TransformMatrix(Transform t) {
             Transform result = new Transform();
             for (int i=0; i < 16; ++i)
@@ -149,15 +188,6 @@ namespace TrabalhoCG3 {
             return res;
 
         }
-
-
-        
-
-
-        public void Translacao(){}
-        public void Rotacao(){}
-        public void Escala(){}
-
     }
 }
 

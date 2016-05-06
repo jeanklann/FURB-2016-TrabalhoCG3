@@ -2,6 +2,9 @@
 using System.Drawing;
 
 namespace TrabalhoCG3 {
+    /// <summary>
+    /// Classe responsável por controlar a câmera
+    /// </summary>
     public class Camera {
         public Camera(){
             MinX_ortho = -400;
@@ -9,12 +12,19 @@ namespace TrabalhoCG3 {
             MaxX_ortho = 400;
             MaxY_ortho = 400;
         }
+        /// <summary>
+        /// Reseta a câmera
+        /// </summary>
         public void Reset(){
             MinX_ortho = -400;
             MinY_ortho = -400;
             MaxX_ortho = 400;
             MaxY_ortho = 400;
         }
+        /// <summary>
+        /// Pega o centro da câmera
+        /// </summary>
+        /// <value>O centro</value>
         public Point4D Center { 
             get { 
                 return new Point4D(
@@ -30,11 +40,22 @@ namespace TrabalhoCG3 {
                 MaxY_ortho = value.Y + H / 2;
             }
         }
+        /// <summary>
+        /// Pega o tamanho que está renderizando a câmera
+        /// </summary>
+        /// <value>O tamanho da câmera</value>
         public Size Size {
             get {
                 return new Size(
                     (int)(MaxX_ortho - MinX_ortho),
                     (int)(MaxY_ortho - MinY_ortho));
+            }
+            set {
+                Point4D c = Center;
+                MaxX_ortho = c.X + value.Width/2;
+                MinX_ortho = c.X - value.Width/2;
+                MaxY_ortho = c.Y + value.Height/2;
+                MinY_ortho = c.Y - value.Height/2;
             }
         }
 
@@ -42,9 +63,6 @@ namespace TrabalhoCG3 {
         public double MinY_ortho { get; set;}
         public double MaxX_ortho { get; set;}
         public double MaxY_ortho { get; set;}
-
-        public void Pan(){}
-        public void Zoom(){}
 
     }
 }

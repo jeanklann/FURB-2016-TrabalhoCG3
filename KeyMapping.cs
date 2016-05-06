@@ -2,6 +2,9 @@
 using OpenTK.Input;
 
 namespace TrabalhoCG3 {
+    /// <summary>
+    /// Classe responsável por armazenar todo o mapeamento das teclas
+    /// </summary>
     public static class KeyMapping {
         public const Key Help = Key.F1;
 
@@ -22,6 +25,8 @@ namespace TrabalhoCG3 {
 
         public const Key ZoomPlus = Key.Plus;
         public const Key ZoomMinus = Key.Minus;
+
+        public const Key ChangeColor = Key.O;
 
 
 

@@ -2,6 +2,9 @@
 using System.Drawing;
 
 namespace TrabalhoCG3 {
+    /// <summary>
+    /// Classe responsável por armazenar as variáveis estáticas
+    /// </summary>
     public static class States {
         public static bool IsSelecting {get; set;}
         public static GraphicObject SelectedGraphicObject { get; set;}
