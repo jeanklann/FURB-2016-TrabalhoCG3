@@ -5,13 +5,13 @@ namespace TrabalhoCG3 {
     /// Classe responsável por gerir a bounding box
     /// </summary>
     public class BBox {
+        #region Fields
         public double MinX { get; set; }
         public double MinY { get; set; }
         public double MinZ { get; set; }
         public double MaxX { get; set; }
         public double MaxY { get; set; }
         public double MaxZ { get; set; }
-
         /// <summary>
         /// Pega o centro da bounding box
         /// </summary>
@@ -24,6 +24,7 @@ namespace TrabalhoCG3 {
                     (MinZ + MaxZ) / 2);
             }
         }
+        #endregion
     }
 }
 

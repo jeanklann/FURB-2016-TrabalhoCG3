@@ -5,7 +5,10 @@ namespace TrabalhoCG3 {
     /// Classe responsável pela matriz de transformação
     /// </summary>
     public class Transform {
+        #region Fields
         public const double DEG_TO_RAD = 0.017453292519943295769236907684886;
+        #endregion
+        #region Methods
         public Transform() {
             
         }
@@ -188,6 +191,7 @@ namespace TrabalhoCG3 {
             return res;
 
         }
+        #endregion
     }
 }
 

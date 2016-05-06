@@ -11,10 +11,11 @@ namespace TrabalhoCG3 {
     /// Classe da tela do jogo
     /// </summary>
     public class Game:GameWindow {
+        #region Fields
         private const double SIZE_BBOX_POINT = 10;
-
         public static Matrix4 ProjectionMatrix;
-
+        #endregion
+        #region Methods
         /// <summary>
         /// Função executada no carregamento do OpenGL, é chamado automaticamente pela API do OpenTK.
         /// </summary>
@@ -317,6 +318,7 @@ namespace TrabalhoCG3 {
                 mouseDelta.Y * cameraSize.Height / bounds.Height);
             return res;
         }
+        #endregion
 
     }
 }

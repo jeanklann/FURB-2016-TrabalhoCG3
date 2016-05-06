@@ -10,9 +10,21 @@ namespace TrabalhoCG3 {
     /// Classe responsável por controlar os eventos do mouse e teclado
     /// </summary>
     public static class Events {
+        #region Fields
+        /// <summary>
+        /// Variação da movimentação do mouse
+        /// </summary>
         private static Point delta;
+        /// <summary>
+        /// A diferença entre o ultima clique e a posicao atual
+        /// </summary>
         private static Point4D difference;
+        /// <summary>
+        /// A distância para detectar que clicou em um vértice
+        /// </summary>
         private const double DISTANCIA_VERTICE = 20;
+        #endregion
+        #region Methods
         /// <summary>
         /// Muda a primitiva do objeto selecionado
         /// </summary>
@@ -518,6 +530,8 @@ namespace TrabalhoCG3 {
             States.IsRotating = false;
             States.IsTranslating = false;
         }
+
+        #endregion
     }
 }
 

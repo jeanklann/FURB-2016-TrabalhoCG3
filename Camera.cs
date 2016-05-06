@@ -6,21 +6,11 @@ namespace TrabalhoCG3 {
     /// Classe responsável por controlar a câmera
     /// </summary>
     public class Camera {
-        public Camera(){
-            MinX_ortho = -400;
-            MinY_ortho = -400;
-            MaxX_ortho = 400;
-            MaxY_ortho = 400;
-        }
-        /// <summary>
-        /// Reseta a câmera
-        /// </summary>
-        public void Reset(){
-            MinX_ortho = -400;
-            MinY_ortho = -400;
-            MaxX_ortho = 400;
-            MaxY_ortho = 400;
-        }
+        #region Fields
+        public double MinX_ortho { get; set;}
+        public double MinY_ortho { get; set;}
+        public double MaxX_ortho { get; set;}
+        public double MaxY_ortho { get; set;}
         /// <summary>
         /// Pega o centro da câmera
         /// </summary>
@@ -58,11 +48,26 @@ namespace TrabalhoCG3 {
                 MinY_ortho = c.Y - value.Height/2;
             }
         }
+        #endregion
+        #region Methods
+        public Camera(){
+            MinX_ortho = -400;
+            MinY_ortho = -400;
+            MaxX_ortho = 400;
+            MaxY_ortho = 400;
+        }
+        /// <summary>
+        /// Reseta a câmera
+        /// </summary>
+        public void Reset(){
+            MinX_ortho = -400;
+            MinY_ortho = -400;
+            MaxX_ortho = 400;
+            MaxY_ortho = 400;
+        }
 
-        public double MinX_ortho { get; set;}
-        public double MinY_ortho { get; set;}
-        public double MaxX_ortho { get; set;}
-        public double MaxY_ortho { get; set;}
+
+        #endregion
 
     }
 }

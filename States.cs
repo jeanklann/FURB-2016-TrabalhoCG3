@@ -6,6 +6,7 @@ namespace TrabalhoCG3 {
     /// Classe responsável por armazenar as variáveis estáticas
     /// </summary>
     public static class States {
+        #region Fields
         public static bool IsSelecting {get; set;}
         public static GraphicObject SelectedGraphicObject { get; set;}
         public static bool IsSonsSelected { get; set;}
@@ -21,10 +22,10 @@ namespace TrabalhoCG3 {
         public static Point LastMouseTransformingPosition { get; set;}
         public static Game Game {get; set;}
         public static int IndiceSelectedVertice{ get; set;}
+        public static World World {get; set;}
+        public static GraphicObject GraphicObjectCreating{get; set;}
 
-        public static World World;
-
-        public static GraphicObject GraphicObjectCreating;
+        #endregion
     }
 }
 

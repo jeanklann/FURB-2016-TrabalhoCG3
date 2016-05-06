@@ -6,11 +6,13 @@ namespace TrabalhoCG3 {
     /// Classe responsável pelos pontos na tela
     /// </summary>
     public class Point4D {
+        #region Fields
         public double X { get; set; }
         public double Y { get; set; }
         public double Z { get; set; }
         public double W { get; set; }
-
+        #endregion
+        #region Methods
         public Point4D(double x, double y, double z, double w) {
             X = x;
             Y = y;
@@ -96,6 +98,7 @@ namespace TrabalhoCG3 {
         public static Point4D operator /(Point4D n1,  Point n2){
             return new Point4D(n1.X/n2.X, n1.Y/n2.Y, n1.Z, n1.W);
         }
+        #endregion
     }
 }
 

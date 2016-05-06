@@ -8,6 +8,7 @@ namespace TrabalhoCG3 {
     /// Classe responsável pelos objetos gráficos
     /// </summary>
     public class GraphicObject {
+        #region Fields
         public BBox BBox { get; set; }
         public List<Point4D> Points { get; set; }
         public Transform Transform { get; set; }
@@ -17,7 +18,8 @@ namespace TrabalhoCG3 {
         public static Color[] Colors = {Color.Black, Color.Blue, Color.Orange, Color.Yellow, Color.Red, Color.Cyan, Color.Green, Color.Gray, Color.Magenta, Color.Maroon, Color.Purple};
         public Color Color { get; set; }
         public float Size { get; set; }
-
+        #endregion
+        #region Methods
         public GraphicObject(){
             Points = new List<Point4D>();
             Transform = new Transform();
@@ -121,6 +123,7 @@ namespace TrabalhoCG3 {
             }
             GL.PopMatrix();
         }
+        #endregion
     }
 }
 

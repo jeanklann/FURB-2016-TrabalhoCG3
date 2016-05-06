@@ -6,6 +6,7 @@ namespace TrabalhoCG3 {
     /// Classe responsável por armazenar todo o mapeamento das teclas
     /// </summary>
     public static class KeyMapping {
+        #region Fields
         public const Key Help = Key.F1;
 
         public const Key ChangePrimitiveType = Key.Space;
@@ -28,7 +29,7 @@ namespace TrabalhoCG3 {
 
         public const Key ChangeColor = Key.O;
 
-
+        #endregion
 
     }
 }
