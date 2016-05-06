@@ -6,10 +6,13 @@ using OpenTK.Input;
 using System.Collections.Generic;
 
 namespace TrabalhoCG3 {
+    
     /// <summary>
     /// Classe da tela do jogo
     /// </summary>
     public class Game:GameWindow {
+        private const double SIZE_BBOX_POINT = 10;
+
         public static Matrix4 ProjectionMatrix;
 
         /// <summary>
@@ -64,6 +67,7 @@ namespace TrabalhoCG3 {
                 States.GraphicObjectCreating.Draw();
             }
             DrawSelectedObject();
+            DrawSelectedPoint();
             GL.PopMatrix ();
             GL.Finish ();
             SwapBuffers ();
@@ -242,6 +246,26 @@ namespace TrabalhoCG3 {
                 GL.Vertex2(States.SelectedGraphicObject.BBox.MinX, States.SelectedGraphicObject.BBox.MaxY);
                 GL.Vertex2(States.SelectedGraphicObject.BBox.MaxX, States.SelectedGraphicObject.BBox.MaxY);
                 GL.Vertex2(States.SelectedGraphicObject.BBox.MaxX, States.SelectedGraphicObject.BBox.MinY);
+                GL.End();
+            }
+        }
+
+        /// <summary>
+        /// Função que desenha uma bounding box ao redor do ponto selecioinado
+        /// </summary>
+        private void DrawSelectedPoint(){
+            if(States.SelectedGraphicObject != null && States.IndiceSelectedVertice != -1) {
+                GraphicObject obj = States.SelectedGraphicObject;
+                Point4D p = obj.Points[States.IndiceSelectedVertice];
+
+                GL.Begin(PrimitiveType.LineLoop);
+                GL.Color3(Color.SeaGreen);
+                GL.LineWidth(1);
+                GL.Vertex2(p.X - SIZE_BBOX_POINT, p.Y - SIZE_BBOX_POINT);
+                GL.Vertex2(p.X + SIZE_BBOX_POINT, p.Y - SIZE_BBOX_POINT);
+                GL.Vertex2(p.X + SIZE_BBOX_POINT, p.Y + SIZE_BBOX_POINT);
+                GL.Vertex2(p.X - SIZE_BBOX_POINT, p.Y + SIZE_BBOX_POINT);
+
                 GL.End();
             }
         }

@@ -12,6 +12,7 @@ namespace TrabalhoCG3 {
     public static class Events {
         private static Point delta;
         private static Point4D difference;
+        private const double DISTANCIA_VERTICE = 20;
         /// <summary>
         /// Muda a primitiva do objeto selecionado
         /// </summary>
@@ -92,9 +93,20 @@ namespace TrabalhoCG3 {
         /// <param name="e">KeyboardKeyEventArgs</param>
         public static bool KeyDownDeleteObject(object sender, KeyboardKeyEventArgs e){
             if(States.SelectedGraphicObject != null){
-                Game.Remove(States.SelectedGraphicObject, States.World.GraphicObjects);
-                Console.WriteLine("Objeto removido");
-                States.SelectedGraphicObject = null;
+                if(States.IndiceSelectedVertice != -1) {
+                    States.SelectedGraphicObject.Points.RemoveAt(States.IndiceSelectedVertice);
+                    States.IndiceSelectedVertice = -1;
+                    Console.WriteLine("Ponto removido");
+                    States.SelectedGraphicObject.ReadyMatrix();
+                    if(States.SelectedGraphicObject.Points.Count < 1) {
+                        Game.Remove(States.SelectedGraphicObject, States.World.GraphicObjects);
+                        Console.WriteLine(", e o objeto também foi, pois acabaram os pontos.");
+                    }
+                } else {
+                    Game.Remove(States.SelectedGraphicObject, States.World.GraphicObjects);
+                    Console.WriteLine("Objeto removido");
+                    States.SelectedGraphicObject = null;
+                }
             }
             return false;
         }
@@ -299,6 +311,17 @@ namespace TrabalhoCG3 {
         /// <returns>Retorna true se é necessário interromper para não verificar os próximos eventos.</returns>
         /// <param name="objects">Lista de objeto a ser iterado (inicialmente deve ser chamado o States.World.GraphicObjects</param>
         private static bool VerificaSelecao(List<GraphicObject> objects){
+            if(States.SelectedGraphicObject != null) {
+                Point4D mouse = new Point4D(States.LastMouseDownPosition.X, States.LastMouseDownPosition.Y);
+                List<Point4D> pontos = States.SelectedGraphicObject.Points;
+                for(int i = 0; i < pontos.Count; i++) {
+                    if(pontos[i].Distance(mouse) < DISTANCIA_VERTICE) {
+                        States.IndiceSelectedVertice = i;
+                            return false;
+                    }
+                }
+            }
+            States.IndiceSelectedVertice = -1;
             if(States.IsTransforming)
                 return false;
             if(States.GraphicObjectCreating != null)
@@ -431,7 +454,12 @@ namespace TrabalhoCG3 {
         /// <param name="e">MouseButtonEventArgs</param>
         public static bool MouseMoveIsTranslating(object sender, MouseMoveEventArgs e){
             if(States.SelectedGraphicObject != null){
-                States.SelectedGraphicObject.Transform.AddTranslation(delta.X, -delta.Y, 0);
+                if(States.IndiceSelectedVertice != -1) {
+                    States.SelectedGraphicObject.Points[States.IndiceSelectedVertice].X += delta.X;
+                    States.SelectedGraphicObject.Points[States.IndiceSelectedVertice].Y -= delta.Y;
+                } else {
+                    States.SelectedGraphicObject.Transform.AddTranslation(delta.X, -delta.Y, 0);
+                }
             } else if(States.SelectedPoints != null){
 
             }

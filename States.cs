@@ -20,6 +20,7 @@ namespace TrabalhoCG3 {
         public static bool IsPamming { get; set; }
         public static Point LastMouseTransformingPosition { get; set;}
         public static Game Game {get; set;}
+        public static int IndiceSelectedVertice{ get; set;}
 
         public static World World;
 

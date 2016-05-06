@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace TrabalhoCG3 {
     /// <summary>
@@ -46,6 +47,30 @@ namespace TrabalhoCG3 {
             return string.Format("[{0},{1},{2},{3}]", X, Y, Z, W);
         }
 
+        /// <summary>
+        /// Calcula a distância entre 2 pontos
+        /// </summary>
+        /// <param name="p1">Ponto 1.</param>
+        /// <param name="p2">Ponto 2.</param>
+        public static double Distance(Point4D p1, Point4D p2){
+            return Math.Sqrt(
+                Math.Pow((p2.X - p1.X), 2)
+                +
+                Math.Pow((p2.Y - p1.Y), 2)
+            );
+        }
+        /// <summary>
+        /// Calcula a distância entre outro pontos
+        /// </summary>
+        /// <param name="p2">Ponto.</param>
+        public double Distance(Point4D p2){
+            return Math.Sqrt(
+                Math.Pow((p2.X - X), 2)
+                +
+                Math.Pow((p2.Y - Y), 2)
+            );
+        }
+
         public static Point4D operator +(Point4D n1,  Point4D n2){
             return new Point4D(n1.X+n2.X, n1.Y + n2.Y, n1.Z+n2.Z, n1.W);
         }
@@ -57,6 +82,19 @@ namespace TrabalhoCG3 {
         }
         public static Point4D operator /(Point4D n1,  Point4D n2){
             return new Point4D(n1.X/n2.X, n1.Y/n2.Y, n1.Z/n2.Z, n1.W);
+        }
+
+        public static Point4D operator +(Point4D n1,  Point n2){
+            return new Point4D(n1.X+n2.X, n1.Y + n2.Y, n1.Z, n1.W);
+        }
+        public static Point4D operator -(Point4D n1,  Point n2){
+            return new Point4D(n1.X-n2.X, n1.Y - n2.Y, n1.Z, n1.W);
+        }
+        public static Point4D operator *(Point4D n1,  Point n2){
+            return new Point4D(n1.X*n2.X, n1.Y*n2.Y, n1.Z, n1.W);
+        }
+        public static Point4D operator /(Point4D n1,  Point n2){
+            return new Point4D(n1.X/n2.X, n1.Y/n2.Y, n1.Z, n1.W);
         }
     }
 }
